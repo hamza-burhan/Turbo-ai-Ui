@@ -1,0 +1,208 @@
+<div class="main-container">
+  <div class="topbar-container">
+    <mat-toolbar class="topbar">
+      <div class="menu-bt-container">
+        <button
+          mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with menu icon"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>Personal</span>
+      </div>
+      <div class="new-conversation-bt">
+        <span> New Conversation </span>
+        <button
+          mat-icon-button
+          class="example-icon favorite-icon"
+          aria-label="Example icon-button with heart icon"
+        >
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+      </div>
+
+      <div class="profile-image">
+        <img [src]="image" />
+      </div>
+    </mat-toolbar>
+  </div>
+  <div class="conversation-container">
+    <div class="card-container">
+      <div class="inner-card-container">
+        <h4>Sources</h4>
+        <div class="sub-cards-container">
+          <div class="sub-card" style="margin-left: 0px;">
+            <span> Cultural differences between Peru and Switzerland </span>
+            <i class="fab fa-pinterest icon" style="color: red"
+              ><span class="icon-name"> Pintarest</span>
+            </i>
+          </div>
+          <div class="sub-card">
+            <span>Switzerland issues new visa policy for non Schenge..</span>
+            <i class="fab fa-apple icon" style="color: black"
+              ><span class="icon-name"> Apple</span>
+            </i>
+          </div>
+          <div class="sub-card">
+            <span>Election 2023 results and analysis: Peru has shown...</span>
+            <i class="fab fa-pinterest icon" style="color: red"
+              ><span class="icon-name"> Dribbble</span>
+            </i>
+          </div>
+          <div class="sub-card">
+            <span
+              ><i class="fab fa-brands fa-linkedin" style="color: #005eff;"></i>
+              <i class="fab fa-brands fa-google" style="color: #db1f1f;"></i>
+              <i class="fab fa-brands fa-snapchat"></i
+            ></span>
+            <i>View 3 more </i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="second-card-container">
+      <h4>Answer</h4>
+      <div class="content-container">
+        <span
+          >Switzerland's national elections refer to the process through which
+          Swiss citizens elect their federal representatives and government
+          officials.1 Switzerland has a unique political system characterized by
+          direct democracy, federalism, and a multi-party system. Here's a
+          summary of how national elections work in Switzerland<br />
+          1.Federal Structure: Switzerland is a federal state, consisting of 26
+          cantons, each with significant autonomy in various policy areas. The
+          federal government is responsible for foreign affairs, defense, and
+          other national-level functions.<br />
+          3.Bicameral Legislature: The Swiss Federal Assembly is the country's
+          legislature, comprising two chambers: the National Council (lower
+          house) and the Council of States (upper house). The National Council
+          has 200 members elected through a proportional representation system,
+          while the Council of States has 46 members, with each canton sending
+          two representatives.</span
+        >
+      </div>
+      <div class="answer-icon">
+        <div class="icon-box">
+          <mat-icon>drafts</mat-icon>
+        </div>
+        <div class="icon-box">
+          <mat-icon>thumb_down</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chat-input-container">
+    <div class="dialogue" *ngIf="showMenu">
+      <h4>Internal Knowledge</h4>
+      <span
+        >Select which sources of information should be accessed to find the
+        answers.
+      </span>
+      <div class="dialogue-inner">
+        <mat-slide-toggle class="slide-toggle"></mat-slide-toggle>
+        <mat-icon>slow_motion_video</mat-icon>
+        <div class="dialogue-inner-inner">
+          <span class="span-one"> Desk Share Files</span>
+          <span class="span-two">Preview Data here</span>
+        </div>
+      </div>
+      <div class="dialogue-inner" (click)="closeMenu()">
+        <mat-slide-toggle></mat-slide-toggle>
+        <mat-icon>dns</mat-icon>
+        <div class="dialogue-inner-inner">
+          <span class="span-one">Desk Bank</span>
+          <span class="span-two">Preview Data here</span>
+        </div>
+      </div>
+      <div class="dialogue-inner">
+        <mat-slide-toggle></mat-slide-toggle>
+        <mat-icon>language</mat-icon>
+        <div class="dialogue-inner-inner">
+          <span class="span-one">General Public knowledge </span>
+          <span class="span-two">General data via GPT-4</span>
+        </div>
+      </div>
+    </div>
+    <div class="input-container">
+      <button
+        mat-icon-button
+        class="new-topic-bt"
+        (mouseover)="updateButtonText()"
+        (mouseout)="resetButtonText()"
+      >
+        <mat-icon>edit</mat-icon>
+        {{ buttonText }}
+      </button>
+      <div class="input-main-container" id="input-main-container">
+        <textarea
+          type="text"
+          [placeholder]="placeholder"
+          (input)="adjustTextareaHeight()"
+          (focus)="onTextareaFocus()"
+          (focusout)="onTextareaFocusOut()"
+          id="yourTextareaId"
+        ></textarea>
+        <div class="input-bottom-btn">
+          <div class="right-btn">
+            <div
+              class="knowledg-btn"
+              (click)="
+                setActive('Internal Knowledge', 'Query Internal Files...');
+                toaster('laptop', 'Swithing to Internal Knowledge')
+              "
+              (dblclick)="onDoubleClick()"
+              [ngClass]="{ active: activeButton === 'Internal Knowledge' }"
+            >
+              <mat-icon>laptop</mat-icon>
+              <span>Internal Knowledge</span>
+            </div>
+            <div
+              class="knowledg-btn"
+              (click)="
+                setActive('Web Search', 'Query the Web...');
+                toaster('slow_motion_video', 'Swithing to Web Search')
+              "
+              [ngClass]="{ active: activeButton === 'Web Search' }"
+            >
+              <mat-icon>slow_motion_video</mat-icon>
+              <span>Web Search</span>
+            </div>
+            <div
+              class="knowledg-btn"
+              (click)="
+                setActive('GPT 4 Turbo', 'Query the GPT 4...');
+                toaster('scatter_plot', 'Swithing to GPT 4 Turbo')
+              "
+              [ngClass]="{ active: activeButton === 'GPT 4 Turbo' }"
+            >
+              <mat-icon>scatter_plot</mat-icon>
+              <span>GPT 4 Turbo</span>
+            </div>
+          </div>
+          <div class="left-btn">
+            <button
+              mat-icon-button
+              aria-label="Example icon button with a vertical three dot icon"
+            >
+              <mat-icon class="mat-icon-send">attach_file</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              aria-label="Example icon button with a vertical three dot icon"
+            >
+              <mat-icon class="mat-icon-send">send</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toast-container" id="toast-container">
+    <div class="toast" id="toast">
+      <mat-icon color="primary">{{ toasterIcon }}</mat-icon>
+      <p class="toast-text">{{ toasterText }}</p>
+      <div id="progress-bar"></div>
+    </div>
+  </div>
+</div>
